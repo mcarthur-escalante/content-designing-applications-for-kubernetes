@@ -20,4 +20,4 @@ RUN yarn global add @beam-australia/react-env
 RUN yarn global add serve
 
 EXPOSE 5000
-CMD react-env -d build -- serve build
+CMD react-env -d build -- serve --port 5000 build
