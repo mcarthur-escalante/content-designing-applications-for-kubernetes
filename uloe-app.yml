@@ -9,7 +9,6 @@ data:
     REACT_APP_API_PORT="30081"
 
 ---
-
 apiVersion: v1
 kind: Secret
 metadata:
@@ -20,7 +19,6 @@ data:
   mongodb.password: SUxvdmVUaGVMaXN0
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -30,19 +28,18 @@ spec:
   selector:
     app: uloe
   ports:
-  - name: frontend
-    protocol: TCP
-    port: 30080
-    nodePort: 30080
-    targetPort: 5000
-  - name: server
-    protocol: TCP
-    port: 30081
-    nodePort: 30081
-    targetPort: 3001
+    - name: frontend
+      protocol: TCP
+      port: 30080
+      nodePort: 30080
+      targetPort: 5000
+    - name: server
+      protocol: TCP
+      port: 30081
+      nodePort: 30081
+      targetPort: 3001
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -58,48 +55,48 @@ spec:
         app: uloe
     spec:
       containers:
-      - name: uloe-server
-        image: <Your Docker Hub username>/uloe-server:0.0.1
-        ports:
-        - name: web
-          containerPort: 3001
-          protocol: TCP
-        env:
-        - name: MONGODB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: uloe-config
-              key: mongodb.host
-        - name: MONGODB_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: uloe-config
-              key: mongodb.port
-        - name: MONGODB_USER
-          valueFrom:
-            secretKeyRef:
-              name: uloe-secure-config
-              key: mongodb.username
-        - name: MONGODB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: uloe-secure-config
-              key: mongodb.password
-      - name: uloe-frontend
-        image: <Your Docker Hub username>/uloe-frontend:0.0.1
-        ports:
-        - name: web
-          containerPort: 5000
-          protocol: TCP
-        volumeMounts:
-        - name: frontend-config
-          mountPath: /usr/src/app/.env
-          subPath: .env
-          readOnly: true
+        - name: uloe-server
+          image: <Your Docker Hub username>/uloe-server:0.0.1
+          ports:
+            - name: web
+              containerPort: 3001
+              protocol: TCP
+          env:
+            - name: MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: uloe-config
+                  key: mongodb.host
+            - name: MONGODB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: uloe-config
+                  key: mongodb.port
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: uloe-secure-config
+                  key: mongodb.username
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: uloe-secure-config
+                  key: mongodb.password
+        - name: uloe-frontend
+          image: <Your Docker Hub username>/uloe-frontend:0.0.1
+          ports:
+            - name: web
+              containerPort: 5000
+              protocol: TCP
+          volumeMounts:
+            - name: frontend-config
+              mountPath: /usr/src/app/.env
+              subPath: .env
+              readOnly: true
       volumes:
-      - name: frontend-config
-        configMap:
-          name: uloe-config
-          items:
-          - key: .env
-            path: .env
+        - name: frontend-config
+          configMap:
+            name: uloe-config
+            items:
+              - key: .env
+                path: .env
