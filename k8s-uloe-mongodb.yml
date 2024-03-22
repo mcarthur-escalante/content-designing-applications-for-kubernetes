@@ -15,8 +15,8 @@ spec:
         app: uloe-mongodb
     spec:
       containers:
-      - name: uloe-mongodb
-        image: linuxacademycontent/uloe-mongodb:1.0.0
-        ports:
-        - name: mongodb
-          containerPort: 27017
+        - name: uloe-mongodb
+          image: linuxacademycontent/uloe-mongodb:1.0.0
+          ports:
+            - name: mongodb
+              containerPort: 27017
