@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
         - name: uloe-server
-          image: <Your Docker Hub username>/uloe-server:0.0.1
+          image: mcarthurdocker/uloe-server:0.0.1
           ports:
             - name: web
               containerPort: 3001
@@ -83,7 +83,7 @@ spec:
                   name: uloe-secure-config
                   key: mongodb.password
         - name: uloe-frontend
-          image: <Your Docker Hub username>/uloe-frontend:0.0.1
+          image: mcarthurdocker/uloe-frontend:0.0.1
           ports:
             - name: web
               containerPort: 5000
