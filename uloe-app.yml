@@ -57,6 +57,12 @@ spec:
       containers:
         - name: uloe-server
           image: mcarthurdocker/uloe-server:0.0.3
+          securityContext:
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: logs
+              mountPath: /uloe-server-app/logs
+              readOnly: false
           ports:
             - name: web
               containerPort: 3001
@@ -90,10 +96,12 @@ spec:
               protocol: TCP
           volumeMounts:
             - name: frontend-config
-              mountPath: /usr/src/app/.env
+              mountPath: /uloe-server-app/.env
               subPath: .env
               readOnly: true
       volumes:
+        - name: logs
+          emptyDir: {}
         - name: frontend-config
           configMap:
             name: uloe-config

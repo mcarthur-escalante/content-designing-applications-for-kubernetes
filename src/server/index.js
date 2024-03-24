@@ -59,7 +59,7 @@ MongoClient.connect(mongoURI, { useUnifiedTopology: true })
             log("Adding item " + item.name);
             res.send(item);
             // Write added items to a special log file
-            fs.appendFileSync("added_items.log", item.name + "\n");
+            fs.appendFileSync("logs/added_items.log", item.name + "\n");
           })
           .catch((error) => console.error(error));
       }
@@ -76,5 +76,5 @@ var server = app.listen(port, function () {
 });
 
 log = function (data) {
-  fs.appendFileSync("uloe.log", data + "\n");
+  fs.appendFileSync("logs/uloe.log", data + "\n");
 };
