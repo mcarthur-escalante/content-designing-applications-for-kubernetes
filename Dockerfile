@@ -10,6 +10,7 @@ WORKDIR /uloe-server-app
 COPY --from=build /uloe-server-app/node_modules node_modules
 COPY --from=build /uloe-server-app/package*.json .
 COPY --from=build /uloe-server-app/src/server .
+COPY --from=build /uloe-server-app/src/jobs .
 CMD ["node", "index.js"]
 
 FROM node:16.6.2-alpine3.11 as frontend
