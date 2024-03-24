@@ -17,7 +17,6 @@ const mongoURI = `mongodb://${username}:${password}@${mongoHost}:${mongoPort}/ul
 const mongoURISanitized = `mongodb://${username}:****@${mongoHost}:${mongoPort}/uloe`;
 console.log("MongoDB connection string %s", mongoURISanitized);
 
-const fs = require("fs");
 const cors = require("cors");
 app.use(cors());
 
@@ -58,8 +57,7 @@ MongoClient.connect(mongoURI, { useUnifiedTopology: true })
             const item = { _id: result.insertedId, name: req.body.name };
             log("Adding item " + item.name);
             res.send(item);
-            // Write added items to a special log file
-            fs.appendFileSync("logs/added_items.log", item.name + "\n");
+            log("Added item ", item.name);
           })
           .catch((error) => console.error(error));
       }
@@ -76,5 +74,5 @@ var server = app.listen(port, function () {
 });
 
 log = function (data) {
-  fs.appendFileSync("logs/uloe.log", data + "\n");
+  console.log(data);
 };
